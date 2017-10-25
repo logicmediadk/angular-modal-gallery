@@ -3,6 +3,6 @@
  */
 export interface ButtonsConfig {
   download?: boolean;
-  extUrl?: boolean;
+  delete?: boolean;
   close?: boolean;
 }

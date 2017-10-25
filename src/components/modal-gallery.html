@@ -11,7 +11,7 @@
       </div>
 
       <upperButtons [image]="currentImage" [configButtons]="configButtons"
-                    (close)="closeGallery()" (download)="downloadImage()"></upperButtons>
+                    (close)="closeGallery()" (download)="downloadImage()" (delete)="deleteImage($event)"></upperButtons>
 
       <a class="nav-left" *ngIf="images?.length > 1"
          [hidden]="isFirstImage"
@@ -26,6 +26,8 @@
          [hidden]="isLastImage"
          (click)="nextImage()"><i class="fa fa-angle-right"></i>
       </a>
-      <span class="info-text">{{getDescriptionToDisplay()}}</span>
   </div>
+  
+	  <span class="info-text-top">{{getDescriptionToDisplay()}}</span>
+	  <span class="info-text-bottom">{{getImageCountToDisplay()}}</span>
 </div>

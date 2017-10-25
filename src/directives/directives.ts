@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { ExternalUrlButtonDirective } from './external-url-button.directive';
+import { DeleteButtonDirective } from './delete-button.directive';
 import { DownloadButtonDirective } from './download-button.directive';
 import { CloseButtonDirective } from './close-button.directive';
 import { ClickOutsideDirective } from './click-outside.directive';
@@ -31,5 +31,5 @@ import { ClickOutsideDirective } from './click-outside.directive';
  * Array of all directives.
  */
 export const DIRECTIVES = [
-  ExternalUrlButtonDirective, DownloadButtonDirective, CloseButtonDirective, ClickOutsideDirective
+  DeleteButtonDirective, DownloadButtonDirective, CloseButtonDirective, ClickOutsideDirective
 ];

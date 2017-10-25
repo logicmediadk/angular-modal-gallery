@@ -44,6 +44,7 @@ export class UpperButtonsComponent {
 
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
 
   downloadImage() {
     this.download.emit(true);
@@ -51,5 +52,10 @@ export class UpperButtonsComponent {
 
   closeGallery() {
     this.close.emit(true);
+  }
+
+  deleteImage(imageId: number) {
+    this.closeGallery();
+    this.delete.emit(imageId);
   }
 }

@@ -38,6 +38,31 @@
   -ms-user-select: none;
   user-select: none;
   -webkit-user-drag: none;
+  
+  > span {
+
+    &.info-text-top {
+      color: #fff;
+      display: inline-block;
+      width: 100%;
+      height: 20px;
+      font-weight: bold;
+      text-align: center;
+      position: fixed;
+	  margin-top: 25px;
+    }
+	
+	&.info-text-bottom {
+      color: #fff;
+      display: inline-block;
+      width: 100%;
+      height: 20px;
+      font-weight: bold;
+      text-align: center;
+      position: fixed;
+	  bottom: 0;
+	  margin-bottom: 25px;
+    }
 }
 
 .ng-gallery-content {
@@ -96,20 +121,6 @@
   &.effect {
     animation: fadeIn 0.5s;
   }
-
-  > span {
-
-    &.info-text {
-      color: #fff;
-      display: inline-block;
-      width: 100%;
-      height: 20px;
-      font-weight: bold;
-      text-align: center;
-      position: fixed;
-      left: 0;
-      right: 0;
-    }
 
     @media (max-width: 676px) {
       &.info-text {

@@ -50,7 +50,7 @@ export class DownloadButtonDirective implements OnInit, OnChanges {
       return num;
     }
 
-    if (this.configButtons.extUrl && this.imgExtUrl) {
+    if (this.configButtons.delete) {
       num++;
     }
 

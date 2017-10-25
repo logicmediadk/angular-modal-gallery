@@ -26,11 +26,11 @@
 .ng-gallery {
   width: 100%;
   display: inline-block;
+  padding: 15px;
 }
 
 img {
   &.ng-thumb {
-    height: 50px;
     float: left;
     display: block;
     cursor: pointer;

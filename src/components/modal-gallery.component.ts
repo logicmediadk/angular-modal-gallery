@@ -65,13 +65,15 @@ export class Image {
   thumb?: string | null | undefined;
   description?: string | null | undefined;
   extUrl?: string | null | undefined;
+  roomName: string | null | undefined;
 
   constructor(img: string, thumb?: string | null | undefined,
-              description?: string | null | undefined, extUrl?: string | null | undefined) {
+    description?: string | null | undefined, extUrl?: string | null | undefined, roomName?: string | null | undefined) {
     this.img = img;
     this.thumb = thumb;
     this.description = description;
     this.extUrl = extUrl;
+    this.roomName = roomName;
   }
 }
 
@@ -95,6 +97,7 @@ export interface Description {
   imageText?: string;
   numberSeparator?: string;
   beforeTextDescription?: string;
+  roomName?: string;
 }
 
 // /**
@@ -181,13 +184,14 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * DEPRECATED
    * -----REMOVE THIS IN 4.0.0----- deprecated both showDownloadButton and showExtUrlButton
    */
-  @Input() showExtUrlButton: boolean = false; // deprecated
+  @Input() showDeleteButton: boolean = false; // deprecated
 
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() firstImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() hasData: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
 
   /**
    * Boolean that it is true if the modal gallery is visible
@@ -286,16 +290,18 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
     // if description isn't provided initialize it with a default object
     if (!this.description) {
       this.description = {
-        imageText: 'Image ',
+        imageText: '',
         numberSeparator: '/',
-        beforeTextDescription: ' - '
+        beforeTextDescription: ' - ',
+        roomName: ''
       };
     }
 
     // if one of the Description fields isn't initialized, provide a default value
-    this.description.imageText = this.description.imageText || 'Image ';
+    this.description.imageText = this.description.imageText || '';
     this.description.numberSeparator = this.description.numberSeparator || '/';
     this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
+    this.description.roomName = this.description.roomName || '';
   }
 
   /**
@@ -307,7 +313,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
     // build configButtons to use it inside upper-buttons
     this.configButtons = {
       download: this.showDownloadButton || (this.buttonsConfig && this.buttonsConfig.download),
-      extUrl: this.showExtUrlButton || (this.buttonsConfig && this.buttonsConfig.extUrl),
+      delete: this.showDeleteButton || (this.buttonsConfig && this.buttonsConfig.delete),
       close: (this.buttonsConfig && this.buttonsConfig.close)
     };
 
@@ -339,15 +345,20 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * @returns String description to display.
    */
   getDescriptionToDisplay() {
-    if (this.description && this.description.customFullDescription) {
-      return this.description.customFullDescription;
-    }
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
-    if (!this.currentImage.description || this.currentImage.description === '') {
-      return `${this.description.imageText}${this.currentImageIndex + 1}${this.description.numberSeparator}${this.images.length}`;
+    if (!this.currentImage.description || this.currentImage.description === '' && this.currentImage.roomName) {
+      return `${this.currentImage.roomName}`;
     }
-    return `${this.description.imageText}${this.currentImageIndex + 1}${this.description.numberSeparator}${this.images.length}${this.description.beforeTextDescription}${this.currentImage.description}`;
+    if (!this.currentImage.roomName || this.currentImage.roomName === '' && this.currentImage.description) {
+      return `${this.currentImage.description}`;
+    }
+
+    return `${this.currentImage.roomName}${this.description.beforeTextDescription}${this.currentImage.description}`;
+  }
+
+  getImageCountToDisplay() {
+    return `${this.currentImageIndex + 1}${this.description.numberSeparator}${this.images.length}`;
   }
 
   /**
@@ -411,6 +422,11 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
     this.loading = true;
     this.currentImageIndex = this.getNextIndex(action, this.currentImageIndex);
     this.showModalGallery(this.currentImageIndex);
+  }
+
+  /* Custom method */
+  deleteImage(imageId) {
+    this.delete.emit(imageId);
   }
 
   /**
