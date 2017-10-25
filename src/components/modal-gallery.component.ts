@@ -61,6 +61,7 @@ export class ImageModalEvent {
  * The only required value is the image path `img`.
  */
 export class Image {
+  imageId: number | undefined;
   img: string;
   thumb?: string | null | undefined;
   description?: string | null | undefined;
@@ -68,12 +69,13 @@ export class Image {
   roomName: string | null | undefined;
 
   constructor(img: string, thumb?: string | null | undefined,
-    description?: string | null | undefined, extUrl?: string | null | undefined, roomName?: string | null | undefined) {
+    description?: string | null | undefined, extUrl?: string | null | undefined, roomName?: string | null | undefined, imageId?: number | undefined) {
     this.img = img;
     this.thumb = thumb;
     this.description = description;
     this.extUrl = extUrl;
     this.roomName = roomName;
+    this.imageId = imageId;
   }
 }
 
