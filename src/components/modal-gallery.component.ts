@@ -349,11 +349,14 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   getDescriptionToDisplay() {
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
-    if (!this.currentImage.description || this.currentImage.description === '' && this.currentImage.roomName) {
+    if ((!this.currentImage.description || this.currentImage.description === '') && this.currentImage.roomName) {
       return `${this.currentImage.roomName}`;
     }
-    if (!this.currentImage.roomName || this.currentImage.roomName === '' && this.currentImage.description) {
+    if ((!this.currentImage.roomName || this.currentImage.roomName === '') && this.currentImage.description) {    
       return `${this.currentImage.description}`;
+    }
+    if(!this.currentImage.roomName && !this.currentImage.description) {
+      return '';
     }
 
     return `${this.currentImage.roomName}${this.description.beforeTextDescription}${this.currentImage.description}`;
